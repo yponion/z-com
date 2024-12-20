@@ -5,5 +5,5 @@ export default async function HomeLayout({
 }: {
   children: ReactNode;
 }) {
-  return <div>{children}</div>;
+  return <div>홈레이아웃{children}</div>;
 }
