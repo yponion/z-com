@@ -1,0 +1,8 @@
+git commit -m "feat:useSelectedLayoutSegment로 ActiveLink 만들기
+
+ - useSelectedLayoutSegment === home? true : false
+ - useSelectedLayoutSegment는 layout.tsx에서 import한 컴포넌트만 쓸 수 있다. page.tsx에서 쓰면 무조건 null이 나옴.
+ - s를 붙이면 주소 끝까지 가져옴
+ - 훅들을 쓸때는 보통 useclient를 해야 돌아감
+ - onClick 등 이벤트 리스너 있으면 useclient일 가능성이 높으니 처음부터 컴포넌트로 빼서 클라이언트 적용
+ - svg 복사 -> outerHTML 복사"
