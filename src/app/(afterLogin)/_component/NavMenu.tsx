@@ -9,7 +9,7 @@ export default function NavMenu() {
   console.log(segment);
   const me = {
     // 임시로 내 정보 있는것처럼
-    id: "zerohch0",
+    id: "yp071704",
   };
 
   return (
