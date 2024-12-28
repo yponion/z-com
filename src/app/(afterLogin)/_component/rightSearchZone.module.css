@@ -9,6 +9,11 @@
   display: flex;
   align-items: center;
 }
+@media (prefers-color-scheme: dark) {
+  .search {
+    background-color: rgb(32, 35, 39);
+  }
+}
 
 .search svg {
   margin-left: 20px;

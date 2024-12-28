@@ -156,3 +156,16 @@
 .followRecommend h3 {
   padding-bottom: 12px;
 }
+
+@media (prefers-color-scheme: dark) {
+  .followRecommend {
+    background-color: rgb(15, 20, 25);
+  }
+  .postButton {
+    background-color: rgb(247, 249, 249);
+    color: rgb(15, 20, 25);
+  }
+  .postButton svg {
+    fill: black;
+  }
+}

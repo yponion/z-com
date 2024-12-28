@@ -68,9 +68,10 @@
 }
 
 .backButton {
+  margin-left: 10px;
   width: 34px;
   height: 34px;
-  background-color: #fff;
+  background-color: inherit;
   border: none;
   border-radius: 17px;
   display: flex;
@@ -80,4 +81,17 @@
 }
 .backButton:hover {
   background-color: rgba(15, 20, 25, 0.1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .backButton {
+    fill: white;
+  }
+  .backButton:hover {
+    background-color: rgba(239, 243, 244, 0.1);
+  }
+  .followButton {
+    background-color: white;
+    color: black;
+  }
 }

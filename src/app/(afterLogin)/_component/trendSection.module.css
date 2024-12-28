@@ -12,3 +12,12 @@
   margin-bottom: 12px;
   padding: 0 16px;
 }
+
+@media (prefers-color-scheme: dark) {
+  .trendBg {
+    background-color: rgb(15, 20, 25);
+  }
+  .trend {
+    color: rgb(255, 255, 255);
+  }
+}
