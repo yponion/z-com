@@ -1,11 +1,11 @@
 "use client";
 
-import dayjs from "dayjs";
 import style from "../message.module.css";
 import { faker } from "@faker-js/faker";
+import { useRouter } from "next/navigation";
+import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
-import { useRouter } from "next/navigation";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
