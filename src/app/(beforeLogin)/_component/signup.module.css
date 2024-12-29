@@ -132,6 +132,10 @@
 .closeButton:hover {
   background-color: rgba(15, 20, 25, 0.1);
 }
+.error {
+  font-weight: bold;
+  color: red;
+}
 
 @media all and (min-width: 687px) {
   .closeButton {
