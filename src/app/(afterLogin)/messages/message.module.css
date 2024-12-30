@@ -53,3 +53,8 @@
 .roomChatInfo b {
   color: black;
 }
+@media (prefers-color-scheme: dark) {
+  .roomChatInfo b {
+    color: white;
+  }
+}

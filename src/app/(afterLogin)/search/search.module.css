@@ -14,14 +14,18 @@
   background-color: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border-color: rgb(239, 243, 244);
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  width: 600px;
   position: fixed;
 }
+@media (prefers-color-scheme: dark) {
+  .searchTop {
+    background-color: rgba(22, 22, 23, 0.9);
+  }
+}
+
 .searchZone {
   display: flex;
   align-items: center;
+  background-color: inherit;
 }
 
 .backButton {
@@ -58,6 +62,11 @@
   border-color: rgb(239, 243, 244);
   border-bottom-width: 1px;
   border-bottom-style: solid;
+}
+@media (prefers-color-scheme: dark) {
+  .homeFixed {
+    background-color: rgba(22, 22, 23, 0.9);
+  }
 }
 
 .homeTab {
