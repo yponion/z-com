@@ -1,5 +1,6 @@
 "use server";
 
+import { signIn } from '@/auth';
 import { redirect } from 'next/navigation'
 
 const onSubmit = async (prevState: { message: string | null }, formData: FormData) => {
@@ -21,6 +22,7 @@ const onSubmit = async (prevState: { message: string | null }, formData: FormDat
         if (response.status === 403) return { message: "user_exists" };
         console.log(await response.json());
         shouldRedirect = true;
+        signIn("credentials", { username: formData.get("id"), password: formData.get("password"), redirect: false });
     } catch (err) {
         console.log(err);
         return { message: null };

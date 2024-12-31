@@ -2,8 +2,8 @@ import { http, HttpResponse } from 'msw'
 import { faker } from '@faker-js/faker'
 
 const User = [
-    { id: 'elonmusk', nickname: "Elon Musk", image: '/musklogo' },
-    { id: 'yp071704', nickname: "양정운", image: '/onionlogo' },
+    { id: 'elonmusk', nickname: "Elon Musk", image: '/musklogo.jpg' },
+    { id: 'yp071704', nickname: "양정운", image: '/onionlogo.jpg' },
     { id: 'leo', nickname: "leo", image: faker.image.avatar() },
 ]
 

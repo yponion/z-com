@@ -11,11 +11,11 @@ export default function LoginModal() {
   const [message, setMessage] = useState("");
   const router = useRouter();
 
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
+  const onSubmit: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
     setMessage("");
     try {
-      signIn("credentials", { username: id, password, redirect: false });
+      await signIn("credentials", { username: id, password, redirect: false });
       router.replace("/home");
     } catch (err) {
       console.error(err);
