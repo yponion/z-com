@@ -15,7 +15,9 @@ async function getPostRecommends() {
     {
       next: {
         tags: ["posts", "recommends"],
+        // revalidate: 60,
       },
+      // cache: "force-cache",
     }
   );
 
