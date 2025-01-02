@@ -1,6 +1,12 @@
 import { http, HttpResponse } from 'msw'
 import { faker } from '@faker-js/faker'
 
+function generateDate() {
+    const lastWeek = new Date(Date.now());
+    lastWeek.setDate(lastWeek.getDate() - 7);
+    return faker.date.between({ from: lastWeek, to: new Date() });
+}
+
 const User = [
     { id: 'elonmusk', nickname: "Elon Musk", image: '/musklogo.jpg' },
     { id: 'yp071704', nickname: "양정운", image: '/onionlogo.jpg' },
@@ -35,5 +41,12 @@ export const handlers = [
                 'Set-Cookie': 'connect.sid=msw-cookie;HttpOnly;Path=/'
             },
         });
+    }),
+    http.get(`${baseUrl}/api/postRecommends`, async ({ request }) => {
+        return HttpResponse.json([
+            { postId: 1, User: User[0], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: 2, User: User[1], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: 3, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+        ])
     })
 ];
