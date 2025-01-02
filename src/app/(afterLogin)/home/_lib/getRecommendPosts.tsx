@@ -1,6 +1,6 @@
-export async function getPostRecommends() {
+export async function getRecommendPosts() {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/postRecommends`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/recommend-posts`,
     {
       next: {
         tags: ["posts", "recommends"],

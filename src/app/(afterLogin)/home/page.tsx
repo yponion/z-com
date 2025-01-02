@@ -7,14 +7,14 @@ import PostForm from "./_component/PostForm";
 import Tab from "./_component/Tab";
 import TabProvider from "./_component/TabProvider";
 import style from "./home.module.css";
-import { getPostRecommends } from "./_lib/getPostRecommends";
+import { getRecommendPosts } from "./_lib/getRecommendPosts";
 import PostRecommends from "./_component/PostRecommends";
 
 export default async function Home() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["posts", "recommends"],
-    queryFn: getPostRecommends,
+    queryFn: getRecommendPosts,
   });
   const dehydratedState = dehydrate(queryClient);
 
