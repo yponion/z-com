@@ -36,7 +36,7 @@ export default async function PhotoModal(props: Props) {
         <ImageZone id={id} />
         <div className={style.commentZone}>
           <SinglePost id={id} noImage />
-          <CommentForm />
+          <CommentForm id={id} />
           <div>
             <Comments id={id} />
           </div>
