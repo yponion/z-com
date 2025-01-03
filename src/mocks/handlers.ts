@@ -59,7 +59,9 @@ export const handlers = [
     }),
     http.get(`${baseUrl}/api/users/:userId`, async ({ request, params }) => {
         const { userId } = params;
-        return HttpResponse.json(User[1])
+        const found = User.find((v) => v.id === userId)
+        if (found) return HttpResponse.json(found)
+        return HttpResponse.json({ message: 'no_such_user' }, { status: 404 })
     }),
     http.get(`${baseUrl}/api/users/:userId/posts`, async ({ request, params }) => {
         const { userId } = params;
