@@ -49,6 +49,13 @@ export const handlers = [
             { postId: 3, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
+    http.get(`${baseUrl}/api/following-posts`, async ({ request }) => {
+        return HttpResponse.json([
+            { postId: 1, User: User[0], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: 2, User: User[1], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: 3, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+        ])
+    }),
     http.get(`${baseUrl}/api/search/:tag`, async ({ request, params }) => {
         const { tag } = params;
         return HttpResponse.json([
