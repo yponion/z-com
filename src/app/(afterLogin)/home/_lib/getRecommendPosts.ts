@@ -3,7 +3,7 @@ export async function getRecommendPosts() {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/recommend-posts`,
     {
       next: {
-        tags: ["posts", "recommends"],
+        tags: ["posts", "recommend"],
         // revalidate: 60,
       },
       // cache: "force-cache",

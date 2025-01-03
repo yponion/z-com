@@ -7,7 +7,7 @@ import type { Post as IPost } from "@/model/Post";
 
 export default function RecommendPosts() {
   const { data } = useQuery<IPost[]>({
-    queryKey: ["posts", "recommends"],
+    queryKey: ["posts", "recommend"],
     queryFn: getRecommendPosts,
     staleTime: 60 * 1000, // fresh -> stale, default: 0ms
     gcTime: 300000, // inactive 일 때 메모리 정리, default: 300000ms
