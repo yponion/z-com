@@ -38,9 +38,13 @@
 
 .commentZone {
   width: 350px;
-  background-color: white;
   border-left: 1px solid rgb(239, 243, 244);
   overflow: auto;
+}
+@media (prefers-color-scheme: light) {
+  .commentZone {
+    background-color: white;
+  }
 }
 
 .closeButton {

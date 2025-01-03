@@ -1,9 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { getRecommendFollow } from "./_lib/getRecommendFollow";
+import { getRecommendFollow } from "../_lib/getRecommendFollow";
 import type { User } from "@/model/User";
-import RecommendFollow from "./_component/RecommendFollow";
+import RecommendFollow from "./RecommendFollow";
 
 export default function RecommendFollowSection() {
   const { data } = useQuery<User[]>({
