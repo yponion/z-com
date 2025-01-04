@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import style from "./post.module.css";
 import { ReactNode } from "react";
+import type { PostImage } from "@/model/PostImage";
 
 type Props = {
   children: ReactNode;
@@ -15,7 +16,7 @@ type Props = {
       image: string;
     };
     createdAt: Date;
-    Images: any[];
+    Images: PostImage[];
   };
 };
 

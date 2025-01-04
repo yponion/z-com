@@ -16,6 +16,7 @@ export default async function Home() {
     queryKey: ["posts", "recommend"],
     queryFn: getRecommendPosts,
     initialPageParam: 0,
+    staleTime: 60 * 1000, // 데이터 재요청 방지
   });
   const dehydratedState = dehydrate(queryClient);
 

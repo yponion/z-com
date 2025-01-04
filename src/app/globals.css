@@ -100,3 +100,7 @@ a {
     color-scheme: dark;
   }
 }
+
+input[type="search"]::-webkit-search-cancel-button {
+  cursor: pointer;
+}

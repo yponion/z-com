@@ -8,13 +8,11 @@ export async function getRecommendPosts({ pageParam }: Props) {
         tags: ["posts", "recommend"],
         // revalidate: 60,
       },
-      // cache: "force-cache",
+      cache: "force-cache",
     }
   );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
+  if (!res.ok) throw new Error("Failed to fetch data");
 
   return res.json();
 }

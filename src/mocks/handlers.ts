@@ -31,7 +31,7 @@ export const handlers = [
             }
         })
     }),
-    http.post(`${baseUrl}/api/users`, async ({ request }) => {
+    http.post(`${baseUrl}/api/users`, () => {
         console.log('회원가입');
         // return HttpResponse.text(JSON.stringify('user_exists'), {
         //   status: 403,
@@ -42,29 +42,29 @@ export const handlers = [
             },
         });
     }),
-    http.get(`${baseUrl}/api/recommend-posts`, async ({ request }) => {
+    http.get(`${baseUrl}/api/recommend-posts`, ({ request }) => {
         const url = new URL(request.url);
         const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
-        if (cursor >= 20)
-            return HttpResponse.text(JSON.stringify('no_more_data'), {
-                status: 404,
-            });
+        // if (cursor >= 20)
+        //     return HttpResponse.text(JSON.stringify('no_more_data'), {
+        //         status: 404,
+        //     });
         return HttpResponse.json([
-            { postId: cursor + 1, User: User[0], content: `${cursor + 1}. ${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
-            { postId: cursor + 2, User: User[1], content: `${cursor + 2}. ${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
-            { postId: cursor + 3, User: User[2], content: `${cursor + 3}. ${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }, { imageId: 3, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
-            { postId: cursor + 4, User: User[2], content: `${cursor + 4}. ${faker.lorem.paragraph()}`, Images: [], createdAt: generateDate() },
-            { postId: cursor + 5, User: User[2], content: `${cursor + 5}. ${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }, { imageId: 3, link: faker.image.urlLoremFlickr() }, { imageId: 4, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 1, User: User[0], content: `${cursor + 1} test`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 2, User: User[1], content: `${cursor + 2} test`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 3, User: User[2], content: `${cursor + 3} test`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }, { imageId: 3, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 4, User: User[2], content: `${cursor + 4} test`, Images: [], createdAt: generateDate() },
+            { postId: cursor + 5, User: User[2], content: `${cursor + 5} test`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }, { imageId: 3, link: faker.image.urlLoremFlickr() }, { imageId: 4, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
-    http.get(`${baseUrl}/api/following-posts`, async ({ request }) => {
+    http.get(`${baseUrl}/api/following-posts`, () => {
         return HttpResponse.json([
             { postId: 1, User: User[0], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
             { postId: 2, User: User[1], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
             { postId: 3, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
-    http.get(`${baseUrl}/api/search/:tag`, async ({ request, params }) => {
+    http.get(`${baseUrl}/api/search/:tag`, ({ params }) => {
         const { tag } = params;
         return HttpResponse.json([
             { postId: 1, User: User[0], content: `${1} 검색결과 ${tag}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
@@ -72,13 +72,13 @@ export const handlers = [
             { postId: 3, User: User[2], content: `${3} 검색결과 ${tag}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
-    http.get(`${baseUrl}/api/users/:userId`, async ({ request, params }) => {
+    http.get(`${baseUrl}/api/users/:userId`, ({ params }) => {
         const { userId } = params;
         const found = User.find((v) => v.id === userId)
         if (found) return HttpResponse.json(found)
         return HttpResponse.json({ message: 'no_such_user' }, { status: 404 })
     }),
-    http.get(`${baseUrl}/api/users/:userId/posts`, async ({ request, params }) => {
+    http.get(`${baseUrl}/api/users/:userId/posts`, ({ params }) => {
         const { userId } = params;
         return HttpResponse.json([
             { postId: 1, User: User[0], content: `${1} ${userId}의 게시글`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
@@ -86,7 +86,7 @@ export const handlers = [
             { postId: 3, User: User[2], content: `${3} ${userId}의 게시글`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
-    http.get(`${baseUrl}/api/posts/:postId`, async ({ request, params }) => {
+    http.get(`${baseUrl}/api/posts/:postId`, ({ params }) => {
         const { postId } = params;
         if (parseInt(postId as string) > 10) return HttpResponse.json({ message: 'no_such_post' }, { status: 404 })
         return HttpResponse.json(
@@ -101,7 +101,7 @@ export const handlers = [
             },
         )
     }),
-    http.get(`${baseUrl}/api/posts/:postId/comments`, async ({ request, params }) => {
+    http.get(`${baseUrl}/api/posts/:postId/comments`, ({ params }) => {
         const { postId } = params;
         return HttpResponse.json([
             { postId: 1, User: User[0], content: `${1} 게시글 ${postId}의 답글`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
@@ -109,10 +109,10 @@ export const handlers = [
             { postId: 3, User: User[2], content: `${3} 게시글 ${postId}의 답글`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
-    http.get(`${baseUrl}/api/recommend-follows`, async ({ request }) => {
+    http.get(`${baseUrl}/api/recommend-follows`, () => {
         return HttpResponse.json(User)
     }),
-    http.get(`${baseUrl}/api/trends`, async ({ request }) => {
+    http.get(`${baseUrl}/api/trends`, () => {
         return HttpResponse.json([
             { tagId: 1, title: '원', count: 1230 },
             { tagId: 2, title: '투', count: 1200 },

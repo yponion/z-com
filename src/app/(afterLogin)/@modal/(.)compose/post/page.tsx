@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function PostModal() {
-  const [content, setContent] = useState();
+  const [content] = useState();
   const imageRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
 

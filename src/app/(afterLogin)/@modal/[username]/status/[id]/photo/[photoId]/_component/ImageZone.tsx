@@ -9,7 +9,7 @@ import { getSinglePost } from "@/app/(afterLogin)/[username]/status/[id]/_lib/ge
 type Props = { id: string };
 
 export default function ImageZone({ id }: Props) {
-  const { data: post, error } = useQuery<
+  const { data: post } = useQuery<
     IPost,
     Error,
     IPost,

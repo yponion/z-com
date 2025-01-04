@@ -11,7 +11,7 @@ export default function CommentForm({ id }: Props) {
   const queryClient = useQueryClient();
   const post = queryClient.getQueryData(["posts", id]);
 
-  const [content, setContent] = useState("");
+  const [content] = useState("");
   const imageRef = useRef<HTMLInputElement>(null);
   const onClickButton = () => {};
   const onSubmit = () => {};

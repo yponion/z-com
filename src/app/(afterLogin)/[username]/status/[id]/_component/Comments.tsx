@@ -10,7 +10,7 @@ type Props = { id: string };
 export default function Comments({ id }: Props) {
   const queryClient = useQueryClient();
   const post = queryClient.getQueryData(["posts", id]);
-  const { data, error } = useQuery<
+  const { data } = useQuery<
     IPost[],
     Error,
     IPost[],
