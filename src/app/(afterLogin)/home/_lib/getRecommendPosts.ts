@@ -1,6 +1,8 @@
-export async function getRecommendPosts() {
+type Props = { pageParam?: number; }
+
+export async function getRecommendPosts({ pageParam }: Props) {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BASE_URL}/api/recommend-posts`,
+    `${process.env.NEXT_PUBLIC_BASE_URL}/api/recommend-posts?cursor=${pageParam}`,
     {
       next: {
         tags: ["posts", "recommend"],

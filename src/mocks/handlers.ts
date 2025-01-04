@@ -43,10 +43,14 @@ export const handlers = [
         });
     }),
     http.get(`${baseUrl}/api/recommend-posts`, async ({ request }) => {
+        const url = new URL(request.url);
+        const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
         return HttpResponse.json([
-            { postId: 1, User: User[0], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
-            { postId: 2, User: User[1], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
-            { postId: 3, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 1, User: User[0], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 2, User: User[1], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 3, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }, { imageId: 3, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
+            { postId: cursor + 4, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [], createdAt: generateDate() },
+            { postId: cursor + 5, User: User[2], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }, { imageId: 3, link: faker.image.urlLoremFlickr() }, { imageId: 4, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
     http.get(`${baseUrl}/api/following-posts`, async ({ request }) => {
