@@ -4,10 +4,11 @@ import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
 import { getRecommendPosts } from "../_lib/getRecommendPosts";
 import Post from "../../_component/Post";
 import type { Post as IPost } from "@/model/Post";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
+import { useInView } from "react-intersection-observer";
 
 export default function RecommendPosts() {
-  const { data } = useInfiniteQuery<
+  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery<
     IPost[],
     Error,
     InfiniteData<IPost[]>,
@@ -22,11 +23,23 @@ export default function RecommendPosts() {
     gcTime: 300000, // inactive 일 때 메모리 정리, default: 300000ms
   });
 
+  const { ref, inView } = useInView({
+    threshold: 0,
+    delay: 0,
+  });
+
+  useEffect(() => {
+    if (inView && !isFetching && hasNextPage) fetchNextPage();
+  }, [inView]);
+
   return data?.pages.map((page, i) => (
-    <Fragment key={i}>
-      {page.map((post) => (
-        <Post key={post.postId} post={post} />
-      ))}
-    </Fragment>
+    <>
+      <Fragment key={i}>
+        {page.map((post) => (
+          <Post key={post.postId} post={post} />
+        ))}
+      </Fragment>
+      <div ref={ref} style={{ height: 50 }}></div>
+    </>
   ));
 }
