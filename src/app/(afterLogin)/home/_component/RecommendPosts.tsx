@@ -1,6 +1,6 @@
 "use client";
 
-import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
+import { InfiniteData, useSuspenseInfiniteQuery } from "@tanstack/react-query";
 import { getRecommendPosts } from "../_lib/getRecommendPosts";
 import Post from "../../_component/Post";
 import type { Post as IPost } from "@/model/Post";
@@ -8,7 +8,15 @@ import { Fragment, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 export default function RecommendPosts() {
-  const { data, fetchNextPage, hasNextPage, isFetching } = useInfiniteQuery<
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetching,
+    isPending,
+    isLoading, // isPending && isFetching
+    isError,
+  } = useSuspenseInfiniteQuery<
     IPost[],
     Error,
     InfiniteData<IPost[]>,
@@ -31,6 +39,8 @@ export default function RecommendPosts() {
   useEffect(() => {
     if (inView && hasNextPage && !isFetching) fetchNextPage();
   }, [inView, fetchNextPage]);
+
+  if (isError) return "에러 처리해줘"; // 클라이언트 에러 처리
 
   return (
     <>

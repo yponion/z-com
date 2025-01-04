@@ -7,6 +7,10 @@ function generateDate() {
     return faker.date.between({ from: lastWeek, to: new Date() });
 }
 
+const delay = (ms) => new Promise((res) => {
+    setTimeout(res, ms)
+})
+
 const User = [
     { id: 'elonmusk', nickname: "Elon Musk", image: '/musklogo.jpg' },
     { id: 'yp071704', nickname: "양정운", image: '/onionlogo.jpg' },
@@ -42,7 +46,8 @@ export const handlers = [
             },
         });
     }),
-    http.get(`${baseUrl}/api/recommend-posts`, ({ request }) => {
+    http.get(`${baseUrl}/api/recommend-posts`, async ({ request }) => {
+        await delay(3000);
         const url = new URL(request.url);
         const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
         // if (cursor >= 20)
@@ -57,7 +62,8 @@ export const handlers = [
             { postId: cursor + 5, User: User[2], content: `${cursor + 5} test`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }, { imageId: 3, link: faker.image.urlLoremFlickr() }, { imageId: 4, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
         ])
     }),
-    http.get(`${baseUrl}/api/following-posts`, () => {
+    http.get(`${baseUrl}/api/following-posts`, async () => {
+        await delay(3000);
         return HttpResponse.json([
             { postId: 1, User: User[0], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
             { postId: 2, User: User[1], content: `${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
