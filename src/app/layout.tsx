@@ -8,13 +8,8 @@ if (
   process.env.NEXT_RUNTIME === "nodejs" &&
   process.env.NODE_ENV !== "production"
 ) {
-  // const { server } = require('@/mocks/http')
-  // server.listen()
-  // eslint require 대신 ES6 import 사용 규칙 때문에 변경
-  (async () => {
-    const { server } = await import("@/mocks/http");
-    server.listen();
-  })();
+  const { server } = require("@/mocks/http");
+  server.listen();
 }
 
 const geistSans = Geist({
