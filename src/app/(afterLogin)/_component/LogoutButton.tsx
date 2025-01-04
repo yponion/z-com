@@ -1,12 +1,15 @@
 "use client";
 
+import { Session } from "next-auth"; // 기존 useSession에서 SSR에선 안되니까 Props로 내려 받아서 사용하게 변경
+// import { Session } from "@auth/core/types"; // 이것도 됨
 import style from "./logoutButton.module.css";
-import { signOut, useSession } from "next-auth/react";
+import { signOut } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export default function LogoutButton() {
+type Props = { me: Session | null };
+
+export default function LogoutButton({ me }: Props) {
   const router = useRouter();
-  const { data: me } = useSession();
 
   const onLogout = () => {
     signOut({ redirect: false }).then(() => {

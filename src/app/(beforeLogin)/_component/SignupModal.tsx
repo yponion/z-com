@@ -12,7 +12,7 @@ function showMessage(message: string | null) {
   if (message === "no_password") return "비밀번호를를 입력하세요.";
   if (message === "no_image") return "이미지를 업로드하세요.";
   if (message === "user_exists") return "이미 사용 중인 아이디입니다.";
-  return "";
+  return message;
 }
 
 export default function SignupModal() {
@@ -39,6 +39,7 @@ export default function SignupModal() {
                   type="text"
                   placeholder=""
                   required
+                  defaultValue={state?.id as string}
                 />
               </div>
               <div className={style.inputDiv}>
@@ -52,6 +53,7 @@ export default function SignupModal() {
                   type="text"
                   placeholder=""
                   required
+                  defaultValue={state?.nickname as string}
                 />
               </div>
               <div className={style.inputDiv}>
@@ -65,6 +67,7 @@ export default function SignupModal() {
                   type="password"
                   placeholder=""
                   required
+                  defaultValue={state?.password as string}
                 />
               </div>
               <div className={style.inputDiv}>
@@ -78,6 +81,7 @@ export default function SignupModal() {
                   type="file"
                   accept="image/*"
                   required
+                  defaultValue={state?.image as string}
                 />
               </div>
             </div>
