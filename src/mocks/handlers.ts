@@ -45,6 +45,10 @@ export const handlers = [
     http.get(`${baseUrl}/api/recommend-posts`, async ({ request }) => {
         const url = new URL(request.url);
         const cursor = parseInt(url.searchParams.get('cursor') as string) || 0;
+        if (cursor >= 20)
+            return HttpResponse.text(JSON.stringify('no_more_data'), {
+                status: 404,
+            });
         return HttpResponse.json([
             { postId: cursor + 1, User: User[0], content: `${cursor + 1}. ${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
             { postId: cursor + 2, User: User[1], content: `${cursor + 2}. ${faker.lorem.paragraph()}`, Images: [{ imageId: 1, link: faker.image.urlLoremFlickr() }, { imageId: 2, link: faker.image.urlLoremFlickr() }], createdAt: generateDate() },
