@@ -7,10 +7,10 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "10mb",
     },
   },
-  async rewrite() {
+  async rewrites() {
     return [
       {
-        cource: 'upload/:slug', // 이 주소를 볼 때마다
+        source: '/upload/:slug', // 이 주소를 볼 때마다
         destination: `${process.env.NEXT_PUBLIC_BASE_URL}/upload/:slug}`, // 이 주소로 바꿔서 실행
       },
     ]
