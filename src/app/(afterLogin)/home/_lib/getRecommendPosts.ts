@@ -5,7 +5,7 @@ export async function getRecommendPosts({ pageParam }: Props) {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/recommends?cursor=${pageParam}`,
     {
       next: {
-        tags: ["posts", "recommend"],
+        tags: ["posts", "recommends"],
         // revalidate: 60,
       },
       cache: "force-cache",

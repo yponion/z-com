@@ -7,7 +7,7 @@ import RecommendFollow from "./RecommendFollow";
 
 export default function RecommendFollowSection() {
   const { data } = useQuery<User[]>({
-    queryKey: ["users", "recommend"],
+    queryKey: ["users", "recommends"],
     queryFn: getRecommendFollow,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,

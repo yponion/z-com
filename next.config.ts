@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/upload/:slug', // 이 주소를 볼 때마다
-        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/upload/:slug}`, // 이 주소로 바꿔서 실행
+        destination: `${process.env.NEXT_PUBLIC_BASE_URL}/upload/:slug`, // 이 주소로 바꿔서 실행
       },
     ]
   },

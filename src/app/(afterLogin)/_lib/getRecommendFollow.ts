@@ -3,7 +3,7 @@ export async function getRecommendFollow() {
         `${process.env.NEXT_PUBLIC_BASE_URL}/api/users/followRecommends`,
         {
             next: {
-                tags: ["users", "recommend"],
+                tags: ["users", "recommends"],
             },
         }
     );

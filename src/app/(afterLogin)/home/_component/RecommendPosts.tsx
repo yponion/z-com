@@ -23,7 +23,7 @@ export default function RecommendPosts() {
     [_1: string, _2: string], // queryKey
     number // initialPageParam의 type 자리
   >({
-    queryKey: ["posts", "recommend"],
+    queryKey: ["posts", "recommends"],
     queryFn: getRecommendPosts,
     initialPageParam: 0, // [[1, 2, 3, 4, 5], [6, 7, 8, 9, 10], ...]
     getNextPageParam: (lastPage) => lastPage.at(-1)?.postId,

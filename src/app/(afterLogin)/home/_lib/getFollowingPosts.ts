@@ -3,7 +3,7 @@ export async function getFollowingPosts() {
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/posts/followings`,
     {
       next: {
-        tags: ["posts", "following"],
+        tags: ["posts", "followings"],
       },
       cache: "force-cache",
     }
