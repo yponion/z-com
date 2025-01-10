@@ -1,7 +1,8 @@
 import { Post } from "@/model/Post";
 import { QueryFunction } from "@tanstack/query-core";
+import { cookies } from 'next/headers';
 
-export const getSinglePost: QueryFunction<
+export const getSinglePostServer: QueryFunction<
     Post,
     [_1: string, _2: string]
 >
@@ -15,6 +16,7 @@ export const getSinglePost: QueryFunction<
                 },
                 cache: "force-cache",
                 credentials: 'include',
+                headers: { Cookie: (await cookies()).toString() },
             }
         );
 
