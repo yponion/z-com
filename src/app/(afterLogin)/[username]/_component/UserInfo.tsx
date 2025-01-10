@@ -5,13 +5,13 @@ import style from "../profile.module.css";
 import BackButton from "@/app/(afterLogin)/_component/BackButton";
 import { getUser } from "../_lib/getUser";
 import { User } from "@/model/User";
-import { useSession } from "next-auth/react";
 import cx from "classnames";
 import { MouseEventHandler } from "react";
+import { Session } from "next-auth";
 
-type Props = { username: string };
+type Props = { username: string; session: Session };
 
-export default function UserInfo({ username }: Props) {
+export default function UserInfo({ username, session }: Props) {
   const { data: user, error } = useQuery<
     User,
     Error,
@@ -23,7 +23,7 @@ export default function UserInfo({ username }: Props) {
     staleTime: 60 * 1000,
     gcTime: 300000,
   });
-  const { data: session } = useSession();
+
   const queryClient = useQueryClient();
 
   const followFn = (userId: string) => {

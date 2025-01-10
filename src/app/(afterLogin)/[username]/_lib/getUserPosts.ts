@@ -13,6 +13,7 @@ export const getUserPosts: QueryFunction<
                 next: {
                     tags: ["posts", "users", username],
                 },
+                credentials: 'include',
             }
         );
 

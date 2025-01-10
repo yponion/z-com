@@ -5,6 +5,7 @@ export async function getRecommendFollow() {
             next: {
                 tags: ["users", "recommends"],
             },
+            credentials: 'include',
         }
     );
 
