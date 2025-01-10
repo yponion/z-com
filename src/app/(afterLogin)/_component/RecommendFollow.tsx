@@ -5,6 +5,8 @@ import style from "./recommendFollow.module.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import cx from "classnames";
+import Link from "next/link";
+import { MouseEventHandler } from "react";
 
 type Props = {
   user: User;
@@ -13,9 +15,7 @@ type Props = {
 export default function RecommendFollow({ user }: Props) {
   const { data: session } = useSession();
   const queryClient = useQueryClient();
-  const followed = !!user.Followers?.find(
-    (v) => v.userId === session?.user?.email
-  );
+  const followed = !!user.Followers?.find((v) => v.id === session?.user?.email);
   const follow = useMutation({
     mutationFn: (userId: string) => {
       return fetch(
@@ -37,7 +37,7 @@ export default function RecommendFollow({ user }: Props) {
         const shallow = [...value];
         shallow[index] = {
           ...shallow[index],
-          Followers: [{ userId: session?.user?.email as string }],
+          Followers: [{ id: session?.user?.email as string }],
           _count: {
             ...shallow[index]._count,
             Followers: shallow[index]._count?.Followers + 1,
@@ -45,8 +45,63 @@ export default function RecommendFollow({ user }: Props) {
         };
         queryClient.setQueryData(["users", "recommends"], shallow);
       }
+
+      const value2: User | undefined = queryClient.getQueryData([
+        "users",
+        userId,
+      ]);
+      if (value2) {
+        const shallow = {
+          ...value2,
+          Followers: [{ id: session?.user?.email as string }],
+          _count: {
+            ...value2._count,
+            Followers: value2._count?.Followers + 1,
+          },
+        };
+        queryClient.setQueryData(["users", userId], shallow);
+      }
     },
-    onError: () => {},
+    onError: (error: Error, userId: string) => {
+      // users가 늘어나면 queryCache 에서 찾아서 해줘야함
+      const value: User[] | undefined = queryClient.getQueryData([
+        "users",
+        "recommends",
+      ]);
+      if (value) {
+        const index = value.findIndex((v) => v.id === userId);
+        const shallow = [...value];
+        shallow[index] = {
+          ...shallow[index],
+          Followers: shallow[index].Followers.filter(
+            (v) => v.id !== session?.user?.email
+          ),
+          _count: {
+            ...shallow[index]._count,
+            Followers: shallow[index]._count?.Followers - 1,
+          },
+        };
+        queryClient.setQueryData(["users", "recommends"], shallow);
+      }
+
+      const value2: User | undefined = queryClient.getQueryData([
+        "users",
+        userId,
+      ]);
+      if (value2) {
+        const shallow = {
+          ...value2,
+          Followers: value2.Followers.filter(
+            (v) => v.id !== session?.user?.email
+          ),
+          _count: {
+            ...value2._count,
+            Followers: value2._count?.Followers - 1,
+          },
+        };
+        queryClient.setQueryData(["users", userId], shallow);
+      }
+    },
   });
   const unFollow = useMutation({
     mutationFn: (userId: string) => {
@@ -70,7 +125,7 @@ export default function RecommendFollow({ user }: Props) {
         shallow[index] = {
           ...shallow[index],
           Followers: shallow[index].Followers.filter(
-            (v) => v.userId !== session?.user?.email
+            (v) => v.id !== session?.user?.email
           ),
           _count: {
             ...shallow[index]._count,
@@ -79,16 +134,71 @@ export default function RecommendFollow({ user }: Props) {
         };
         queryClient.setQueryData(["users", "recommends"], shallow);
       }
+
+      const value2: User | undefined = queryClient.getQueryData([
+        "users",
+        userId,
+      ]);
+      if (value2) {
+        const shallow = {
+          ...value2,
+          Followers: value2.Followers.filter(
+            (v) => v.id !== session?.user?.email
+          ),
+          _count: {
+            ...value2._count,
+            Followers: value2._count?.Followers - 1,
+          },
+        };
+        queryClient.setQueryData(["users", userId], shallow);
+      }
     },
-    onError: () => {},
+    onError: (error: Error, userId: string) => {
+      // users가 늘어나면 queryCache 에서 찾아서 해줘야함
+      const value: User[] | undefined = queryClient.getQueryData([
+        "users",
+        "recommends",
+      ]);
+      if (value) {
+        const index = value.findIndex((v) => v.id === userId);
+        const shallow = [...value];
+        shallow[index] = {
+          ...shallow[index],
+          Followers: [{ id: session?.user?.email as string }],
+          _count: {
+            ...shallow[index]._count,
+            Followers: shallow[index]._count?.Followers + 1,
+          },
+        };
+        queryClient.setQueryData(["users", "recommends"], shallow);
+      }
+
+      const value2: User | undefined = queryClient.getQueryData([
+        "users",
+        userId,
+      ]);
+      if (value2) {
+        const shallow = {
+          ...value2,
+          Followers: [{ id: session?.user?.email as string }],
+          _count: {
+            ...value2._count,
+            Followers: value2._count?.Followers + 1,
+          },
+        };
+        queryClient.setQueryData(["users", userId], shallow);
+      }
+    },
   });
-  const onFollow = () => {
+  const onFollow: MouseEventHandler<HTMLButtonElement> = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
     if (followed) unFollow.mutate(user.id);
     else follow.mutate(user.id);
   };
 
   return (
-    <div className={style.container}>
+    <Link href={`/${user.id}`} className={style.container}>
       <div className={style.userLogoSection}>
         <div className={style.userLogo}>
           <img src={user.image} alt={user.id} />
@@ -103,6 +213,6 @@ export default function RecommendFollow({ user }: Props) {
       >
         <button onClick={onFollow}>{followed ? "팔로잉" : "팔로우"}</button>
       </div>
-    </div>
+    </Link>
   );
 }

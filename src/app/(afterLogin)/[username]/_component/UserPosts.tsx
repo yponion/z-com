@@ -21,7 +21,6 @@ export default function UserPosts({ username }: Props) {
   });
   const queryClient = useQueryClient();
   const user = queryClient.getQueryData(["users", username]);
-  console.dir("user_dir", user);
   if (user) return data?.map((post) => <Post key={post.postId} post={post} />);
   return null;
 }

@@ -39,7 +39,6 @@ export default function ActionButtons({ white, post }: Props) {
     onMutate: () => {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      console.log("queryKeys", queryKeys);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "posts") {
           const value: Post | InfiniteData<Post[]> | undefined =
@@ -92,7 +91,6 @@ export default function ActionButtons({ white, post }: Props) {
     onError: () => {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      console.log("queryKeys", queryKeys);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "posts") {
           const value: Post | InfiniteData<Post[]> | undefined =
@@ -167,7 +165,6 @@ export default function ActionButtons({ white, post }: Props) {
     onMutate: () => {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      console.log("queryKeys", queryKeys);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "posts") {
           const value: Post | InfiniteData<Post[]> | undefined =
@@ -224,7 +221,6 @@ export default function ActionButtons({ white, post }: Props) {
     onError: () => {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      console.log("queryKeys", queryKeys);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "posts") {
           const value: Post | InfiniteData<Post[]> | undefined =
