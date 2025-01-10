@@ -19,7 +19,6 @@ const onSubmit = async (prevState: { message: string | null }, formData: FormDat
                 credentials: "include",
             }
         );
-        console.log(response.status);
         if (response.status === 403) return { message: "user_exists" };
         else if (response.status === 400) return { // 돌려줘서 defaultValue로 써서 form에서 데이터 유지
             message: (await response.json()).data[0],
@@ -28,7 +27,6 @@ const onSubmit = async (prevState: { message: string | null }, formData: FormDat
             password: formData.get("password"),
             image: formData.get("image"),
         };
-        console.log(await response.json());
         shouldRedirect = true;
         signIn("credentials", { username: formData.get("id"), password: formData.get("password"), redirect: false });
     } catch (err) {

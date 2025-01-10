@@ -25,6 +25,88 @@ export default function UserInfo({ username }: Props) {
   });
   const { data: session } = useSession();
   const queryClient = useQueryClient();
+
+  const followFn = (userId: string) => {
+    // users가 늘어나면 queryCache 에서 찾아서 해줘야함
+    const value: User[] | undefined = queryClient.getQueryData([
+      "users",
+      "recommends",
+    ]);
+    if (value) {
+      const index = value.findIndex((v) => v.id === userId);
+      if (index > -1) {
+        const shallow = [...value];
+        shallow[index] = {
+          ...shallow[index],
+          Followers: [{ id: session?.user?.email as string }],
+          _count: {
+            ...shallow[index]._count,
+            Followers: shallow[index]._count?.Followers + 1,
+          },
+        };
+        queryClient.setQueryData(["users", "recommends"], shallow);
+      }
+    }
+
+    const value2: User | undefined = queryClient.getQueryData([
+      "users",
+      userId,
+    ]);
+    if (value2) {
+      const shallow = {
+        ...value2,
+        Followers: [{ id: session?.user?.email as string }],
+        _count: {
+          ...value2._count,
+          Followers: value2._count?.Followers + 1,
+        },
+      };
+      queryClient.setQueryData(["users", userId], shallow);
+    }
+  };
+  const unFollowFn = (userId: string) => {
+    // users가 늘어나면 queryCache 에서 찾아서 해줘야함
+    const value: User[] | undefined = queryClient.getQueryData([
+      "users",
+      "recommends",
+    ]);
+    if (value) {
+      const index = value.findIndex((v) => v.id === userId);
+      if (index > -1) {
+        const shallow = [...value];
+        shallow[index] = {
+          ...shallow[index],
+          Followers: shallow[index].Followers.filter(
+            (v) => v.id !== session?.user?.email
+          ),
+          _count: {
+            ...shallow[index]._count,
+            Followers: shallow[index]._count?.Followers - 1,
+          },
+        };
+        queryClient.setQueryData(["users", "recommends"], shallow);
+      }
+    }
+
+    const value2: User | undefined = queryClient.getQueryData([
+      "users",
+      userId,
+    ]);
+    if (value2) {
+      const shallow = {
+        ...value2,
+        Followers: value2.Followers.filter(
+          (v) => v.id !== session?.user?.email
+        ),
+        _count: {
+          ...value2._count,
+          Followers: value2._count?.Followers - 1,
+        },
+      };
+      queryClient.setQueryData(["users", userId], shallow);
+    }
+  };
+
   const follow = useMutation({
     mutationFn: (userId: string) => {
       return fetch(
@@ -36,86 +118,10 @@ export default function UserInfo({ username }: Props) {
       );
     },
     onMutate: (userId: string) => {
-      console.log("test1");
-      // users가 늘어나면 queryCache 에서 찾아서 해줘야함
-      const value: User[] | undefined = queryClient.getQueryData([
-        "users",
-        "recommends",
-      ]);
-      if (value) {
-        const index = value.findIndex((v) => v.id === userId);
-        if (index > -1) {
-          const shallow = [...value];
-          shallow[index] = {
-            ...shallow[index],
-            Followers: [{ id: session?.user?.email as string }],
-            _count: {
-              ...shallow[index]._count,
-              Followers: shallow[index]._count?.Followers + 1,
-            },
-          };
-          queryClient.setQueryData(["users", "recommends"], shallow);
-        }
-      }
-
-      const value2: User | undefined = queryClient.getQueryData([
-        "users",
-        userId,
-      ]);
-      if (value2) {
-        const shallow = {
-          ...value2,
-          Followers: [{ id: session?.user?.email as string }],
-          _count: {
-            ...value2._count,
-            Followers: value2._count?.Followers + 1,
-          },
-        };
-        queryClient.setQueryData(["users", userId], shallow);
-      }
+      followFn(userId);
     },
     onError: (error: Error, userId: string) => {
-      console.log("test2");
-      // users가 늘어나면 queryCache 에서 찾아서 해줘야함
-      const value: User[] | undefined = queryClient.getQueryData([
-        "users",
-        "recommends",
-      ]);
-      if (value) {
-        const index = value.findIndex((v) => v.id === userId);
-        if (index > -1) {
-          const shallow = [...value];
-          shallow[index] = {
-            ...shallow[index],
-            Followers: shallow[index].Followers.filter(
-              (v) => v.id !== session?.user?.email
-            ),
-            _count: {
-              ...shallow[index]._count,
-              Followers: shallow[index]._count?.Followers - 1,
-            },
-          };
-          queryClient.setQueryData(["users", "recommends"], shallow);
-        }
-      }
-
-      const value2: User | undefined = queryClient.getQueryData([
-        "users",
-        userId,
-      ]);
-      if (value2) {
-        const shallow = {
-          ...value2,
-          Followers: value2.Followers.filter(
-            (v) => v.userId !== session?.user?.email
-          ),
-          _count: {
-            ...value2._count,
-            Followers: value2._count?.Followers - 1,
-          },
-        };
-        queryClient.setQueryData(["users", userId], shallow);
-      }
+      unFollowFn(userId);
     },
   });
   const unFollow = useMutation({
@@ -129,86 +135,10 @@ export default function UserInfo({ username }: Props) {
       );
     },
     onMutate: (userId: string) => {
-      console.log("test3");
-      // users가 늘어나면 queryCache 에서 찾아서 해줘야함
-      const value: User[] | undefined = queryClient.getQueryData([
-        "users",
-        "recommends",
-      ]);
-      if (value) {
-        const index = value.findIndex((v) => v.id === userId);
-        if (index > -1) {
-          const shallow = [...value];
-          shallow[index] = {
-            ...shallow[index],
-            Followers: shallow[index].Followers.filter(
-              (v) => v.id !== session?.user?.email
-            ),
-            _count: {
-              ...shallow[index]._count,
-              Followers: shallow[index]._count?.Followers - 1,
-            },
-          };
-          queryClient.setQueryData(["users", "recommends"], shallow);
-        }
-      }
-
-      const value2: User | undefined = queryClient.getQueryData([
-        "users",
-        userId,
-      ]);
-      if (value2) {
-        const shallow = {
-          ...value2,
-          Followers: value2.Followers.filter(
-            (v) => v.id !== session?.user?.email
-          ),
-          _count: {
-            ...value2._count,
-            Followers: value2._count?.Followers - 1,
-          },
-        };
-        queryClient.setQueryData(["users", userId], shallow);
-      }
+      unFollowFn(userId);
     },
     onError: (error: Error, userId: string) => {
-      console.log("test4");
-      // users가 늘어나면 queryCache 에서 찾아서 해줘야함
-      const value: User[] | undefined = queryClient.getQueryData([
-        "users",
-        "recommends",
-      ]);
-      if (value) {
-        const index = value.findIndex((v) => v.id === userId);
-        if (index > -1) {
-          const shallow = [...value];
-          shallow[index] = {
-            ...shallow[index],
-            Followers: [{ id: session?.user?.email as string }],
-            _count: {
-              ...shallow[index]._count,
-              Followers: shallow[index]._count?.Followers + 1,
-            },
-          };
-          queryClient.setQueryData(["users", "recommends"], shallow);
-        }
-      }
-
-      const value2: User | undefined = queryClient.getQueryData([
-        "users",
-        userId,
-      ]);
-      if (value2) {
-        const shallow = {
-          ...value2,
-          Followers: [{ id: session?.user?.email as string }],
-          _count: {
-            ...value2._count,
-            Followers: value2._count?.Followers + 1,
-          },
-        };
-        queryClient.setQueryData(["users", userId], shallow);
-      }
+      followFn(userId);
     },
   });
   if (error)
@@ -244,7 +174,6 @@ export default function UserInfo({ username }: Props) {
   const onFollow: MouseEventHandler<HTMLButtonElement> = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log("followed", followed);
     if (followed) unFollow.mutate(user.id);
     else follow.mutate(user.id);
   };
