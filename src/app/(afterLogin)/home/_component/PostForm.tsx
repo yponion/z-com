@@ -6,7 +6,6 @@ import { Session } from "next-auth";
 import TextareaAutosize from "react-textarea-autosize";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Post } from "@/model/Post";
-import async from "../../[username]/page";
 
 type Props = { me: Session | null };
 

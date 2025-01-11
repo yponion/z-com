@@ -47,6 +47,14 @@
   flex: 1;
 }
 
+.modalOriginal {
+  padding: 0 16px 20px;
+  margin-top: 54px;
+  margin-bottom: -54px;
+  display: flex;
+  flex-direction: row;
+}
+
 .modalBody {
   padding: 0 16px;
   flex: 1;
@@ -136,4 +144,19 @@
 }
 .actionButton:disabled {
   opacity: 0.5;
+}
+
+@media (prefers-color-scheme: dark) {
+  .modal {
+    background: #000;
+  }
+  .input {
+    background: #000;
+  }
+  .closeButton {
+    background: #000;
+  }
+  .closeButton svg {
+    fill: white;
+  }
 }
