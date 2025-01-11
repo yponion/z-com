@@ -3,27 +3,19 @@
 import { useRouter } from "next/navigation";
 import style from "./post.module.css";
 import { ReactNode } from "react";
-import type { PostImage } from "@/model/PostImage";
+import type { Post } from "@/model/Post";
 
 type Props = {
   children: ReactNode;
-  post: {
-    postId: number;
-    content: string;
-    User: {
-      id: string;
-      nickname: string;
-      image: string;
-    };
-    createdAt: Date;
-    Images: PostImage[];
-  };
+  post: Post;
 };
 
 export default function PostArticle({ children, post }: Props) {
   const router = useRouter();
+  let target = post;
+  if (post.Original) target = post.Original;
   const onClick = () => {
-    router.push(`/${post.User.id}/status/${post.postId}`);
+    router.push(`/${target.User.id}/status/${target.postId}`);
   };
   return (
     <article onClick={onClick} className={style.post}>
