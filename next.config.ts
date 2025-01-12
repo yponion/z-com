@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  // output: 'export', // 이게 있으면 Static 모드, 없으면 dynamic 모드, 없는게 기본
   experimental: {
     serverActions: {
       bodySizeLimit: "10mb",
