@@ -7,13 +7,12 @@ import { Metadata, ResolvingMetadata } from "next";
 
 type Props = {
   searchParams: Promise<{ q: string; f?: string; pf?: string }>;
-  parent: ResolvingMetadata;
 };
 
-export async function generateMetadata({
-  searchParams,
-  parent,
-}: Props): Promise<Metadata> {
+export async function generateMetadata(
+  { searchParams }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   const { q } = await searchParams;
   return {
     title: `${q} - 검색 / Z`,

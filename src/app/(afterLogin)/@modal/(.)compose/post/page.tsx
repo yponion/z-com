@@ -104,6 +104,10 @@ export default function PostModal() {
   const comment = useMutation({
     mutationFn: (e: FormEvent) => {
       e.preventDefault();
+      if (!parent || !parent.postId) {
+        alert("댓글을 작성할 대상이 없습니다.");
+        throw new Error("parent가 null입니다.");
+      }
       const formData = new FormData();
       formData.append("content", content);
       preview.forEach((p) => {
