@@ -3,6 +3,8 @@ import TrendSection from "./_component/TrendSection";
 import style from "./explore.module.css";
 import { Metadata } from "next";
 
+// export const dynamic = "force-dynamic"; // dynamic 적용
+
 export const metadata: Metadata = {
   title: "탐색하기 / Z",
   description: "탐색해보세요.",
