@@ -93,6 +93,25 @@
   background-color: rgb(253, 201, 206);
 }
 
+.messageButton {
+  border: 1px solid rgb(207, 217, 222);
+  margin-right: 8px;
+  border-radius: 17px;
+  height: 34px;
+  width: 34px;
+  background-color: rgb(0, 0, 0, 0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.messageButton:hover {
+  background-color: rgb(15, 20, 25, 0.09);
+}
+.messageButton svg {
+  fill: rgb(15, 20, 25);
+}
+
 .backButton {
   margin-left: 10px;
   width: 34px;
@@ -133,5 +152,12 @@
     border: 1px solid rgb(103, 7, 15);
     background-color: rgb(244, 33, 46, 0.1);
     color: rgb(244, 33, 46);
+  }
+
+  .messageButton:hover {
+    background-color: rgba(239, 243, 244, 0.1);
+  }
+  .messageButton svg {
+    fill: rgb(239, 243, 244);
   }
 }
