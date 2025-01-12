@@ -20,8 +20,22 @@ export async function generateMetadata({ params }: Props) {
   const { username } = await params;
   const user: User = await getUserServer({ queryKey: ["users", username] });
   return {
+    metadataBase: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     title: `${user.nickname} (${user.id}) / Z`,
     description: `${user.nickname} (${user.id}) 프로필`,
+    openGraph: {
+      title: `${user.nickname} (${user.id}) / Z`,
+      description: `${user.nickname} (${user.id}) 프로필`,
+      url: `${process.env.NEXT_PUBLIC_BASE_URL}/${user.id}`,
+      images: [
+        {
+          url: user.image,
+          width: 400,
+          height: 400,
+          alt: `${user.nickname} 프로필 이미지`,
+        },
+      ],
+    },
   };
 }
 

@@ -27,8 +27,29 @@ export async function generateMetadata({ params }: Props) {
     getSinglePostServer({ queryKey: ["posts", id] }),
   ]);
   return {
+    metadataBase: `${process.env.NEXT_PUBLIC_BASE_URL}`,
     title: `Z에서 ${user.nickname} 님 : ${post.content}`,
     description: post.content,
+    openGraph: {
+      title: `Z에서 ${user.nickname} 님 : ${post.content}`,
+      description: post.content,
+      images:
+        post.Images?.length > 0
+          ? post.Images?.map((v) => ({
+              url: v.link,
+              width: 600,
+              height: 400,
+              alt: "게시글 이미지",
+            }))
+          : [
+              {
+                url: user.image,
+                width: 400,
+                height: 400,
+                alt: `${user.nickname} 프로필 이미지`,
+              },
+            ],
+    },
   };
 }
 
