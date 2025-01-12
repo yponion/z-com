@@ -1,18 +1,59 @@
 "use client";
 
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import {
+  ChangeEventHandler,
+  KeyboardEventHandler,
+  useEffect,
+  useState,
+} from "react";
 import style from "./messageForm.module.css";
 import TextareaAutosize from "react-textarea-autosize";
+import useSocket from "../_lib/useSocket";
+import { useSession } from "next-auth/react";
 
-export default function MessageForm() {
+interface Props {
+  id: string;
+}
+
+export default function MessageForm({ id }: Props) {
+  const { data: session } = useSession();
   const [content, setContent] = useState("");
+  const [socket] = useSocket();
   const onChangeContent: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     setContent(e.target.value);
   };
-  const onSubmit: FormEventHandler<HTMLFormElement> = (e) => {
-    e.preventDefault();
-    // soket.io
+  const onSubmit = () => {
+    socket?.emit("sendMessage", {
+      senderId: session?.user?.email,
+      receiverId: id,
+      content,
+    });
+    // 리액트 쿼리 데이터에 추가
     setContent("");
+  };
+
+  useEffect(() => {
+    socket?.on("receiveMessage", (data) => {
+      console.log("data", data);
+    });
+    return () => {
+      socket?.off("receiveMessage");
+    };
+  }, [socket]);
+
+  const onEnter: KeyboardEventHandler<HTMLTextAreaElement> = (e) => {
+    console.log(e.key === "Enter", e);
+    if (e.key === "Enter") {
+      if (e.shiftKey) {
+        return;
+      }
+      e.preventDefault();
+      if (!content?.trim()) {
+        return;
+      }
+      onSubmit();
+      setContent("");
+    }
   };
 
   return (
@@ -21,13 +62,13 @@ export default function MessageForm() {
         className={style.form}
         onSubmit={(e) => {
           e.preventDefault();
-          onSubmit(e);
+          onSubmit();
         }}
       >
         <TextareaAutosize
           value={content}
           onChange={onChangeContent}
-          //   onKeyDown={onEnter}
+          onKeyDown={onEnter}
           placeholder="새 쪽지 작성하기"
         />
         <button

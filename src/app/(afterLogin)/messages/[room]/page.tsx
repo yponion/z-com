@@ -8,6 +8,7 @@ import { auth } from "@/auth";
 import { getUserServer } from "@/app/(afterLogin)/[username]/_lib/getUserServer";
 import { QueryClient } from "@tanstack/react-query";
 import UserInfo from "./_component/UserInfo";
+import WebSocketComponent from "./_component/WebSocketComponent";
 
 dayjs.locale("ko");
 dayjs.extend(relativeTime);
@@ -45,6 +46,7 @@ export default async function ChatRoom({ params }: Props) {
 
   return (
     <main className={style.main}>
+      <WebSocketComponent />
       <UserInfo id={ids[0]} />
       <div className={style.list}>
         {messages.map((m) => {
@@ -75,7 +77,7 @@ export default async function ChatRoom({ params }: Props) {
           );
         })}
       </div>
-      <MessageForm />
+      <MessageForm id={ids[0]} />
     </main>
   );
 }
