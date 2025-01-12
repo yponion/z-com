@@ -57,4 +57,7 @@
   .roomChatInfo b {
     color: white;
   }
+  .room:hover {
+    background-color: rgba(22, 24, 28);
+  }
 }

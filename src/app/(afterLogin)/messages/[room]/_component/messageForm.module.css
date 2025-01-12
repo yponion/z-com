@@ -16,6 +16,7 @@
   align-items: center;
 }
 .form textarea {
+  padding-left: 10px;
   width: 100%;
   border: none;
   background: transparent;
@@ -23,6 +24,7 @@
   line-height: 20px;
   flex: 1;
   outline: none;
+  resize: none;
 }
 .submitButton {
   cursor: pointer;
@@ -32,6 +34,11 @@
   justify-content: center;
   width: 34px;
   height: 34px;
+  border-radius: 17px;
+  background-color: inherit;
+}
+.submitButton:not(:disabled):hover {
+  background-color: rgba(29, 155, 240, 0.1);
 }
 .submitButton:disabled {
   opacity: 0.5;
@@ -39,4 +46,10 @@
 }
 .submitButton svg {
   fill: rgb(29, 155, 240);
+}
+
+@media (prefers-color-scheme: dark) {
+  .form {
+    background-color: rgb(32, 35, 39);
+  }
 }
