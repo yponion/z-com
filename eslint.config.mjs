@@ -16,6 +16,7 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "warn", // any 사용을 경고로 설정
       "@typescript-eslint/no-unused-vars": "warn", // 사용하지 않는 변수를 경고로 설정
       "@typescript-eslint/no-require-imports": "warn", // require()을 경고로 설정
+      "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
     },
   },
 ];
