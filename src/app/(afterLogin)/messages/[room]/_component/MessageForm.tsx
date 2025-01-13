@@ -48,7 +48,7 @@ export default function MessageForm({ id }: Props) {
       };
       const lastPage = newMessages.pages.at(-1);
       const newLastPage = lastPage ? [...lastPage] : [];
-      let lastMessageId = lastPage?.at(-1)?.messageId;
+      const lastMessageId = lastPage?.at(-1)?.messageId;
       newLastPage.push({
         senderId: session.user.email,
         receiverId: id,
