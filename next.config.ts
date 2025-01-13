@@ -1,5 +1,10 @@
 import type { NextConfig } from "next";
 
+const {
+  createVanillaExtractPlugin
+} = require('@vanilla-extract/next-plugin');
+const withVanillaExtract = createVanillaExtractPlugin();
+
 const nextConfig: NextConfig = {
   /* config options here */
   // output: 'export', // 이게 있으면 Static 모드, 없으면 dynamic 모드, 없는게 기본
@@ -18,4 +23,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+module.exports = withVanillaExtract(nextConfig);
