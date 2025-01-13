@@ -8,12 +8,14 @@ import WebSocketComponent from "./_component/WebSocketComponent";
 import MessageList from "./_component/MessageList";
 
 type Props = {
-  params: { room: string };
+  params: Promise<{ room: string }>;
 };
 
 export default async function ChatRoom({ params }: Props) {
   const session = await auth();
-  const ids = params.room.split("-").filter((v) => v !== session?.user?.email);
+  const ids = (await params).room
+    .split("-")
+    .filter((v) => v !== session?.user?.email);
   if (!ids[0]) return null;
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
